@@ -839,7 +839,7 @@
     </section>
 
     <!-- ============================== -->
-    <!-- 页脚 -->
+    <!-- 页脚 (新增浏览量计数) -->
     <!-- ============================== -->
     <footer class="footer">
         <div class="container">
@@ -850,6 +850,10 @@
             </p>
             <p style="margin-top:6px; font-size:0.75rem; color:#718096;">
                 Communications in Transportation Research &middot; COMMTR-2026-0074
+            </p>
+            <!-- 新增浏览量计数 -->
+            <p style="margin-top:8px; font-size:0.8rem; color:#4a5568;">
+                👁️ 总访问量: <span id="visitCount">加载中...</span>
             </p>
         </div>
     </footer>
@@ -946,6 +950,18 @@
                     });
                 }
             });
+
+            // ===== 新增：访问量计数 =====
+            const COUNT_URL = 'https://api.countapi.xyz/hit/das-research/visits';
+            fetch(COUNT_URL)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visitCount').textContent = data.value;
+                })
+                .catch(error => {
+                    document.getElementById('visitCount').textContent = '--';
+                    console.warn('访问量计数 API 调用失败:', error);
+                });
 
         })();
     </script>
